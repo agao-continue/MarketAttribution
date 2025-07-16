@@ -2,7 +2,10 @@ package com.hy.service;
 
 import com.hy.pojo.ActivityAnalysis;
 import com.hy.pojo.Alog;
+import com.hy.pojo.ConversionIncome;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 public interface MarketService {
@@ -14,4 +17,9 @@ public interface MarketService {
     List<ActivityAnalysis> findNewList();
 
     ActivityAnalysis getAaByCid(String cid);
+
+    void anDownload(HttpServletResponse response) throws IOException;
+
+    ConversionIncome getConvertionIncome(String cid,String status);
+
 }

@@ -450,4 +450,10 @@
       activity_type=(select activity_type from activity_analysis where campaign_id = #{cid});
   </select>
 
+  <select id="getConvertionIncome" resultType="com.hy.pojo.ConversionIncome">
+    select cost,exposure_count as exposureCount,exposure_user_count as exposureUserCount,
+           monthly_active_member_count as monthlyActiveMemberCount,
+           new_member_acquisition_count as newMemberAcquisitionCount
+    from activity_analysis where campaign_id =#{cid}
+  </select>
 </mapper>

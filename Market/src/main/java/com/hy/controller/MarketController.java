@@ -1,9 +1,12 @@
 package com.hy.controller;
 
+import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
 import com.hy.pojo.*;
 import com.hy.result.ContentResult;
 import com.hy.service.AlogService;
 import com.hy.service.MarketService;
+import com.hy.utils.ExcelUtil;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.hy.result.Result;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 import static com.hy.utils.AlogUtil.getAlogDiff;
@@ -59,5 +64,18 @@ public class MarketController {
         activityAnalysis.setAlogDiff(alogDiff);
         return new Result(ContentResult.SUCCESS_CODE,ContentResult.SUCCESS_MESSAGE,activityAnalysis);
     }
+    //下载表格
+    @GetMapping("/anDownloadGzy")
+    public void andownload(HttpServletResponse response) throws IOException {
+        //访问service组装数据
+        marketService.anDownload(response);
+    }
+    //转化收益分析
+    @GetMapping("/getConversionIncomeGzy")
+    public Result getConversionIncomeGzy(String cid,String status) {
+        ConversionIncome list=marketService.getConvertionIncome(cid,status);
+        return new Result(ContentResult.SUCCESS_CODE,ContentResult.SUCCESS_MESSAGE,list);
+    }
+
 
 }
