@@ -1,8 +1,6 @@
 package com.hy.controller;
 
-import com.hy.pojo.ActivityAnalysis;
-import com.hy.pojo.ActivityAnalysisExample;
-import com.hy.pojo.Alog;
+import com.hy.pojo.*;
 import com.hy.result.ContentResult;
 import com.hy.service.AlogService;
 import com.hy.service.MarketService;
@@ -14,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hy.result.Result;
 
 import java.util.List;
+
+import static com.hy.utils.AlogUtil.getAlogDiff;
 
 @RestController
 @MapperScan("com.hy.mapper")
@@ -48,4 +48,16 @@ public class MarketController {
         activityAnalysis.setAlog(alog);
         return new Result(ContentResult.SUCCESS_CODE,ContentResult.SUCCESS_MESSAGE,activityAnalysis);
     }
+    //整体活动指标（同一活动下的均值计算与涨跌计算）
+    @GetMapping("/getOverallIndicatorGzy")
+    public Result getOverallIndicatorGzy(String cid) {
+        ActivityAnalysis activityAnalysis = marketService.getAaByCid(cid);//基本信息
+        Alog alog = alogService.getAlog(cid);
+        AlogAvg alogAvg =alogService.getAlogAvg(cid);//均值计算
+        AlogDiff alogDiff =getAlogDiff(alog,alogAvg);//涨跌计算
+        activityAnalysis.setAlogAvg(alogAvg);
+        activityAnalysis.setAlogDiff(alogDiff);
+        return new Result(ContentResult.SUCCESS_CODE,ContentResult.SUCCESS_MESSAGE,activityAnalysis);
+    }
+
 }

@@ -419,9 +419,35 @@
     WHERE
       campaign_id = #{cid};
   </select>
+
   <!--按cid查找基本数据-->
   <select id="selectByCid" resultMap="BaseResultMap" resultType="com.hy.pojo.ActivityAnalysis">
     select * from activity_analysis where campaign_id = #{cid};
+  </select>
+
+  <!--查询单活动均值-->
+  <select id="getAlogAvg" resultType="com.hy.pojo.AlogAvg">
+    SELECT
+      -- 计算各项指标
+      ROUND(avg(cost / exposure_count * 1000), 2) AS cpmAvg,
+      ROUND(avg(monthly_active_member_gmv / cost), 2) AS roiAvg,
+      ROUND(avg(cost / monthly_active_member_count), 2) AS cacAvg,
+      ROUND(avg(monthly_active_member_count / periodic_monthly_active_user_count), 2) AS mamcRateAvg,
+      ROUND(avg(monthly_active_member_gmv / periodic_monthly_active_user_gmv), 2) AS mamcGmvRateAvg,
+      ROUND(avg(new_member_acquisition_gmv / cost), 2) AS rnmRoiAvg,
+      ROUND(avg(cost / new_member_acquisition_count), 2) AS rnmCacAvg,
+      ROUND(avg(new_member_acquisition_count / periodic_monthly_active_user_count), 2) AS nmcRateAvg,
+      ROUND(avg(new_member_acquisition_gmv / periodic_monthly_active_user_gmv), 2) AS nmcGmvRateAvg,
+      ROUND(avg(monthly_active_member_gmv / monthly_active_member_count), 2) AS pcmaGmvAvg,
+      ROUND(avg(next_month_active_member_gmv / next_month_active_member_count), 2) AS mpcmaGmvAvg,
+      ROUND(avg(new_member_acquisition_gmv / new_member_acquisition_count), 2) AS pcnGmvAvg,
+      ROUND(avg(next_month_new_member_gmv / next_month_new_member_count), 2) AS panGmvAvg,
+      ROUND(avg(next_month_active_member_count / monthly_active_member_count), 2) AS masmRateAvg,
+      ROUND(avg(next_month_new_member_count / new_member_acquisition_count), 2) AS mrrRateAvg
+    FROM
+      activity_analysis
+    WHERE
+      activity_type=(select activity_type from activity_analysis where campaign_id = #{cid});
   </select>
 
 </mapper>

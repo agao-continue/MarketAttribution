@@ -60,6 +60,26 @@ public class ActivityAnalysis {
 
     private Alog alog;
 
+    public AlogAvg getAlogAvg() {
+        return alogAvg;
+    }
+
+    public void setAlogAvg(AlogAvg alogAvg) {
+        this.alogAvg = alogAvg;
+    }
+
+    private AlogAvg alogAvg;
+
+    public AlogDiff getAlogDiff() {
+        return alogDiff;
+    }
+
+    public void setAlogDiff(AlogDiff alogDiff) {
+        this.alogDiff = alogDiff;
+    }
+
+    private AlogDiff alogDiff;
+
     public String getCampaignName() {
         return campaignName;
     }

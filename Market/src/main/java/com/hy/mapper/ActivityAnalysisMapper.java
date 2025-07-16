@@ -5,6 +5,7 @@ import com.hy.pojo.ActivityAnalysisExample;
 import java.util.List;
 
 import com.hy.pojo.Alog;
+import com.hy.pojo.AlogAvg;
 import org.apache.ibatis.annotations.Param;
 
 public interface ActivityAnalysisMapper {
@@ -27,4 +28,6 @@ public interface ActivityAnalysisMapper {
     Alog getAlog(@Param("cid") String cid);
 
     ActivityAnalysis selectByCid(String cid);
+
+    AlogAvg getAlogAvg(String cid);
 }
