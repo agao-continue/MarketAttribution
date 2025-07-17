@@ -451,9 +451,27 @@
   </select>
 
   <select id="getConvertionIncome" resultType="com.hy.pojo.ConversionIncome">
-    select cost,exposure_count as exposureCount,exposure_user_count as exposureUserCount,
-           monthly_active_member_count as monthlyActiveMemberCount,
-           new_member_acquisition_count as newMemberAcquisitionCount
-    from activity_analysis where campaign_id =#{cid}
+    SELECT
+      -- 基础字段
+      cost,
+      exposure_count as exposureCount,
+      exposure_user_count as exposureUserCount,
+      monthly_active_member_count as monthlyActiveMemberCount,
+      new_member_acquisition_count as newMemberAcquisitionCount,
+      -- 平均值（通过子查询获取，注意关联条件）
+      (SELECT avg(monthly_active_member_count / exposure_count)
+       FROM activity_analysis
+       WHERE campaign_id = #{cid}) as emacRateAvg1,
+      (SELECT avg(new_member_acquisition_count / exposure_count)
+       FROM activity_analysis
+       WHERE campaign_id = #{cid}) as etnccRateAvg1,
+      (SELECT avg(monthly_active_member_count / exposure_user_count)
+       FROM activity_analysis
+       WHERE campaign_id = #{cid}) as emacRateAvg2,
+      (SELECT avg(new_member_acquisition_count / exposure_user_count)
+       FROM activity_analysis
+       WHERE campaign_id = #{cid}) as etnccRateAvg2
+    FROM activity_analysis
+    WHERE campaign_id = #{cid};
   </select>
 </mapper>

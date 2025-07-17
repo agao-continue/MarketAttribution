@@ -22,4 +22,7 @@ public interface MarketService {
 
     ConversionIncome getConvertionIncome(String cid,String status);
 
+    void conversionIncomeDl(HttpServletResponse response,String cid,String status) throws IOException;
+
+
 }

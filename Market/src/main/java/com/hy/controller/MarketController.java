@@ -4,6 +4,7 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
 import com.hy.pojo.*;
 import com.hy.result.ContentResult;
+import com.hy.service.ActivityMediaSlotAnalysisService;
 import com.hy.service.AlogService;
 import com.hy.service.MarketService;
 import com.hy.utils.ExcelUtil;
@@ -27,6 +28,8 @@ public class MarketController {
     private MarketService marketService;
     @Autowired
     private AlogService alogService;
+    @Autowired
+    private ActivityMediaSlotAnalysisService activityMediaSlotAnalysisService;
     //test
     @GetMapping("/test")
     public Result test() {
@@ -64,10 +67,14 @@ public class MarketController {
         activityAnalysis.setAlogDiff(alogDiff);
         return new Result(ContentResult.SUCCESS_CODE,ContentResult.SUCCESS_MESSAGE,activityAnalysis);
     }
-    //下载表格
+    /**
+     * 下载Excel表格的控制器方法
+     * @param response HttpServletResponse对象，用于向客户端返回响应
+     * @throws IOException 如果在处理HTTP响应时发生I/O错误
+     */
     @GetMapping("/anDownloadGzy")
     public void andownload(HttpServletResponse response) throws IOException {
-        //访问service组装数据
+        // 调用Service层的方法处理Excel下载业务逻辑，将响应对象传递给Service
         marketService.anDownload(response);
     }
     //转化收益分析
@@ -76,6 +83,15 @@ public class MarketController {
         ConversionIncome list=marketService.getConvertionIncome(cid,status);
         return new Result(ContentResult.SUCCESS_CODE,ContentResult.SUCCESS_MESSAGE,list);
     }
-
-
+    //转化效益分析Excel下载
+    @GetMapping("/conversionIncomeDl")
+    public void conversionIncomeDl(HttpServletResponse response,String cid ,String status) throws IOException {
+        marketService.conversionIncomeDl(response,cid,status);
+    }
+    //查询所有触点类型
+    @GetMapping("/findContactPointGzy")
+    public Result findContactPointGzy() {
+        List<String> list = activityMediaSlotAnalysisService.findContactPoint();
+        return new Result(ContentResult.SUCCESS_CODE,ContentResult.SUCCESS_MESSAGE,list);
+    }
 }
