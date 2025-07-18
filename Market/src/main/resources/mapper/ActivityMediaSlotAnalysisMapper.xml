@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.mapper.ActivityMediaSlotAnalysisMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.pojo.ActivityMediaSlotAnalysis" >
+    <result column="campaign_name" property="campaignName" jdbcType="VARCHAR" />
+    <result column="media" property="media" jdbcType="VARCHAR" />
+    <result column="contact_point" property="contactPoint" jdbcType="VARCHAR" />
+    <result column="campaign_id" property="campaignId" jdbcType="VARCHAR" />
+    <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="cost" property="cost" jdbcType="DECIMAL" />
+    <result column="exposure_count" property="exposureCount" jdbcType="BIGINT" />
+    <result column="exposure_user_count" property="exposureUserCount" jdbcType="BIGINT" />
+    <result column="click_count" property="clickCount" jdbcType="BIGINT" />
+    <result column="click_user_count" property="clickUserCount" jdbcType="BIGINT" />
+    <result column="monthly_active_member_count" property="monthlyActiveMemberCount" jdbcType="BIGINT" />
+    <result column="monthly_active_member_gmv" property="monthlyActiveMemberGmv" jdbcType="DECIMAL" />
+    <result column="new_member_acquisition_count" property="newMemberAcquisitionCount" jdbcType="BIGINT" />
+    <result column="new_member_acquisition_gmv" property="newMemberAcquisitionGmv" jdbcType="DECIMAL" />
+    <result column="next_month_active_member_count" property="nextMonthActiveMemberCount" jdbcType="BIGINT" />
+    <result column="next_month_active_member_gmv" property="nextMonthActiveMemberGmv" jdbcType="DECIMAL" />
+    <result column="next_month_new_member_count" property="nextMonthNewMemberCount" jdbcType="BIGINT" />
+    <result column="next_month_new_member_gmv" property="nextMonthNewMemberGmv" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    campaign_name, media, contact_point, campaign_id, start_date, end_date, cost, exposure_count, 
+    exposure_user_count, click_count, click_user_count, monthly_active_member_count, 
+    monthly_active_member_gmv, new_member_acquisition_count, new_member_acquisition_gmv, 
+    next_month_active_member_count, next_month_active_member_gmv, next_month_new_member_count, 
+    next_month_new_member_gmv
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hy.pojo.ActivityMediaSlotAnalysisExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from activity_media_slot_analysis
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.hy.pojo.ActivityMediaSlotAnalysisExample" >
+    delete from activity_media_slot_analysis
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hy.pojo.ActivityMediaSlotAnalysis" >
+    insert into activity_media_slot_analysis (campaign_name, media, contact_point, 
+      campaign_id, start_date, end_date, 
+      cost, exposure_count, exposure_user_count, 
+      click_count, click_user_count, monthly_active_member_count, 
+      monthly_active_member_gmv, new_member_acquisition_count, 
+      new_member_acquisition_gmv, next_month_active_member_count, 
+      next_month_active_member_gmv, next_month_new_member_count, 
+      next_month_new_member_gmv)
+    values (#{campaignName,jdbcType=VARCHAR}, #{media,jdbcType=VARCHAR}, #{contactPoint,jdbcType=VARCHAR}, 
+      #{campaignId,jdbcType=VARCHAR}, #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, 
+      #{cost,jdbcType=DECIMAL}, #{exposureCount,jdbcType=BIGINT}, #{exposureUserCount,jdbcType=BIGINT}, 
+      #{clickCount,jdbcType=BIGINT}, #{clickUserCount,jdbcType=BIGINT}, #{monthlyActiveMemberCount,jdbcType=BIGINT}, 
+      #{monthlyActiveMemberGmv,jdbcType=DECIMAL}, #{newMemberAcquisitionCount,jdbcType=BIGINT}, 
+      #{newMemberAcquisitionGmv,jdbcType=DECIMAL}, #{nextMonthActiveMemberCount,jdbcType=BIGINT}, 
+      #{nextMonthActiveMemberGmv,jdbcType=DECIMAL}, #{nextMonthNewMemberCount,jdbcType=BIGINT}, 
+      #{nextMonthNewMemberGmv,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hy.pojo.ActivityMediaSlotAnalysis" >
+    insert into activity_media_slot_analysis
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="campaignName != null" >
+        campaign_name,
+      </if>
+      <if test="media != null" >
+        media,
+      </if>
+      <if test="contactPoint != null" >
+        contact_point,
+      </if>
+      <if test="campaignId != null" >
+        campaign_id,
+      </if>
+      <if test="startDate != null" >
+        start_date,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+      <if test="cost != null" >
+        cost,
+      </if>
+      <if test="exposureCount != null" >
+        exposure_count,
+      </if>
+      <if test="exposureUserCount != null" >
+        exposure_user_count,
+      </if>
+      <if test="clickCount != null" >
+        click_count,
+      </if>
+      <if test="clickUserCount != null" >
+        click_user_count,
+      </if>
+      <if test="monthlyActiveMemberCount != null" >
+        monthly_active_member_count,
+      </if>
+      <if test="monthlyActiveMemberGmv != null" >
+        monthly_active_member_gmv,
+      </if>
+      <if test="newMemberAcquisitionCount != null" >
+        new_member_acquisition_count,
+      </if>
+      <if test="newMemberAcquisitionGmv != null" >
+        new_member_acquisition_gmv,
+      </if>
+      <if test="nextMonthActiveMemberCount != null" >
+        next_month_active_member_count,
+      </if>
+      <if test="nextMonthActiveMemberGmv != null" >
+        next_month_active_member_gmv,
+      </if>
+      <if test="nextMonthNewMemberCount != null" >
+        next_month_new_member_count,
+      </if>
+      <if test="nextMonthNewMemberGmv != null" >
+        next_month_new_member_gmv,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="campaignName != null" >
+        #{campaignName,jdbcType=VARCHAR},
+      </if>
+      <if test="media != null" >
+        #{media,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPoint != null" >
+        #{contactPoint,jdbcType=VARCHAR},
+      </if>
+      <if test="campaignId != null" >
+        #{campaignId,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cost != null" >
+        #{cost,jdbcType=DECIMAL},
+      </if>
+      <if test="exposureCount != null" >
+        #{exposureCount,jdbcType=BIGINT},
+      </if>
+      <if test="exposureUserCount != null" >
+        #{exposureUserCount,jdbcType=BIGINT},
+      </if>
+      <if test="clickCount != null" >
+        #{clickCount,jdbcType=BIGINT},
+      </if>
+      <if test="clickUserCount != null" >
+        #{clickUserCount,jdbcType=BIGINT},
+      </if>
+      <if test="monthlyActiveMemberCount != null" >
+        #{monthlyActiveMemberCount,jdbcType=BIGINT},
+      </if>
+      <if test="monthlyActiveMemberGmv != null" >
+        #{monthlyActiveMemberGmv,jdbcType=DECIMAL},
+      </if>
+      <if test="newMemberAcquisitionCount != null" >
+        #{newMemberAcquisitionCount,jdbcType=BIGINT},
+      </if>
+      <if test="newMemberAcquisitionGmv != null" >
+        #{newMemberAcquisitionGmv,jdbcType=DECIMAL},
+      </if>
+      <if test="nextMonthActiveMemberCount != null" >
+        #{nextMonthActiveMemberCount,jdbcType=BIGINT},
+      </if>
+      <if test="nextMonthActiveMemberGmv != null" >
+        #{nextMonthActiveMemberGmv,jdbcType=DECIMAL},
+      </if>
+      <if test="nextMonthNewMemberCount != null" >
+        #{nextMonthNewMemberCount,jdbcType=BIGINT},
+      </if>
+      <if test="nextMonthNewMemberGmv != null" >
+        #{nextMonthNewMemberGmv,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hy.pojo.ActivityMediaSlotAnalysisExample" resultType="java.lang.Integer" >
+    select count(*) from activity_media_slot_analysis
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update activity_media_slot_analysis
+    <set >
+      <if test="record.campaignName != null" >
+        campaign_name = #{record.campaignName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.media != null" >
+        media = #{record.media,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactPoint != null" >
+        contact_point = #{record.contactPoint,jdbcType=VARCHAR},
+      </if>
+      <if test="record.campaignId != null" >
+        campaign_id = #{record.campaignId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startDate != null" >
+        start_date = #{record.startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endDate != null" >
+        end_date = #{record.endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cost != null" >
+        cost = #{record.cost,jdbcType=DECIMAL},
+      </if>
+      <if test="record.exposureCount != null" >
+        exposure_count = #{record.exposureCount,jdbcType=BIGINT},
+      </if>
+      <if test="record.exposureUserCount != null" >
+        exposure_user_count = #{record.exposureUserCount,jdbcType=BIGINT},
+      </if>
+      <if test="record.clickCount != null" >
+        click_count = #{record.clickCount,jdbcType=BIGINT},
+      </if>
+      <if test="record.clickUserCount != null" >
+        click_user_count = #{record.clickUserCount,jdbcType=BIGINT},
+      </if>
+      <if test="record.monthlyActiveMemberCount != null" >
+        monthly_active_member_count = #{record.monthlyActiveMemberCount,jdbcType=BIGINT},
+      </if>
+      <if test="record.monthlyActiveMemberGmv != null" >
+        monthly_active_member_gmv = #{record.monthlyActiveMemberGmv,jdbcType=DECIMAL},
+      </if>
+      <if test="record.newMemberAcquisitionCount != null" >
+        new_member_acquisition_count = #{record.newMemberAcquisitionCount,jdbcType=BIGINT},
+      </if>
+      <if test="record.newMemberAcquisitionGmv != null" >
+        new_member_acquisition_gmv = #{record.newMemberAcquisitionGmv,jdbcType=DECIMAL},
+      </if>
+      <if test="record.nextMonthActiveMemberCount != null" >
+        next_month_active_member_count = #{record.nextMonthActiveMemberCount,jdbcType=BIGINT},
+      </if>
+      <if test="record.nextMonthActiveMemberGmv != null" >
+        next_month_active_member_gmv = #{record.nextMonthActiveMemberGmv,jdbcType=DECIMAL},
+      </if>
+      <if test="record.nextMonthNewMemberCount != null" >
+        next_month_new_member_count = #{record.nextMonthNewMemberCount,jdbcType=BIGINT},
+      </if>
+      <if test="record.nextMonthNewMemberGmv != null" >
+        next_month_new_member_gmv = #{record.nextMonthNewMemberGmv,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update activity_media_slot_analysis
+    set campaign_name = #{record.campaignName,jdbcType=VARCHAR},
+      media = #{record.media,jdbcType=VARCHAR},
+      contact_point = #{record.contactPoint,jdbcType=VARCHAR},
+      campaign_id = #{record.campaignId,jdbcType=VARCHAR},
+      start_date = #{record.startDate,jdbcType=TIMESTAMP},
+      end_date = #{record.endDate,jdbcType=TIMESTAMP},
+      cost = #{record.cost,jdbcType=DECIMAL},
+      exposure_count = #{record.exposureCount,jdbcType=BIGINT},
+      exposure_user_count = #{record.exposureUserCount,jdbcType=BIGINT},
+      click_count = #{record.clickCount,jdbcType=BIGINT},
+      click_user_count = #{record.clickUserCount,jdbcType=BIGINT},
+      monthly_active_member_count = #{record.monthlyActiveMemberCount,jdbcType=BIGINT},
+      monthly_active_member_gmv = #{record.monthlyActiveMemberGmv,jdbcType=DECIMAL},
+      new_member_acquisition_count = #{record.newMemberAcquisitionCount,jdbcType=BIGINT},
+      new_member_acquisition_gmv = #{record.newMemberAcquisitionGmv,jdbcType=DECIMAL},
+      next_month_active_member_count = #{record.nextMonthActiveMemberCount,jdbcType=BIGINT},
+      next_month_active_member_gmv = #{record.nextMonthActiveMemberGmv,jdbcType=DECIMAL},
+      next_month_new_member_count = #{record.nextMonthNewMemberCount,jdbcType=BIGINT},
+      next_month_new_member_gmv = #{record.nextMonthNewMemberGmv,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+<!--  查询所有触点-->
+  <select id="findContactPoint" resultType="string">
+    select contact_point from activity_media_slot_analysis  GROUP BY contact_point;
+  </select>
+<!--查询当前活动下全部媒介归因排名-->
+  <select id="findMediaSlot" resultType="com.hy.pojo.MediaSlot">
+    SELECT
+      -- 媒介平台和触点类型
+      amsa.campaign_name As compaignName,
+      amsa.media As media,
+      amsa.contact_point As contactPoint,
+      amsa.campaign_id As compaignId,
+      -- 九个基本数据
+      aa.cost AS cost,
+      amsa.exposure_count AS exposureCount,
+      amsa.exposure_user_count AS exposureUserCount,
+      amsa.click_count AS clickCount,
+      amsa.click_user_count AS clickUserCount,
+      aa.monthly_active_member_count AS monthlyActiveMemberCount,
+      aa.monthly_active_member_gmv AS monthlyActiveMemberGmv,
+      aa.new_member_acquisition_count AS newMemberAcquisitionCount,
+      aa.new_member_acquisition_gmv AS newMemberAcquisitionGmv,
+
+      -- 九个基本数据的占比指标
+      ROUND(amsa.cost / (SELECT SUM(cost) FROM activity_media_slot_analysis WHERE campaign_id = #{cid}), 4) AS costRatio,
+      ROUND(amsa.exposure_count / (SELECT SUM(exposure_count) FROM activity_media_slot_analysis WHERE campaign_id = #{cid}), 4) AS exposureCountRatio,
+      ROUND(amsa.exposure_user_count / (SELECT SUM(exposure_user_count) FROM activity_media_slot_analysis WHERE campaign_id = #{cid}), 4) AS exposureUserCountRatio,
+      ROUND(amsa.click_count / (SELECT SUM(click_count) FROM activity_media_slot_analysis WHERE campaign_id = #{cid}), 4) AS clickCountRatio,
+      ROUND(amsa.click_user_count / (SELECT SUM(click_user_count) FROM activity_media_slot_analysis WHERE campaign_id = #{cid}), 4) AS clickUserCountRatio,
+      ROUND(aa.monthly_active_member_count / (SELECT SUM(monthly_active_member_count) FROM activity_media_slot_analysis WHERE campaign_id = #{cid}), 4) AS monthlyActiveMemberCountRatio,
+      ROUND(aa.monthly_active_member_gmv / (SELECT SUM(monthly_active_member_gmv) FROM activity_media_slot_analysis WHERE campaign_id = #{cid}), 4) AS monthlyActiveMemberGmvRatio,
+      ROUND(aa.new_member_acquisition_count / (SELECT SUM(new_member_acquisition_count) FROM activity_media_slot_analysis WHERE campaign_id = #{cid}), 4) AS newMemberAcquisitionCountRatio,
+      ROUND(aa.new_member_acquisition_gmv / (SELECT SUM(new_member_acquisition_gmv) FROM activity_media_slot_analysis WHERE campaign_id = #{cid}), 4) AS newMemberAcquisitionGmvRatio,
+
+      -- 十七个计算数据
+      ROUND(aa.cost / aa.exposure_count * 1000, 2) AS cpm,
+      ROUND(amsa.cost / amsa.click_count, 2) AS cpc,
+      ROUND(amsa.click_count / amsa.exposure_count * 100, 2) AS ctr,
+      ROUND(aa.monthly_active_member_gmv / aa.cost, 2) AS monthlyActiveRoi,
+      ROUND(aa.cost / aa.monthly_active_member_count, 2) AS monthlyActiveCac,
+      ROUND(aa.monthly_active_member_count / aa.periodic_monthly_active_user_count, 2) AS monthlyActiveContriRate,
+      ROUND(aa.monthly_active_member_gmv / aa.periodic_monthly_active_user_gmv, 2) AS monthlyActiveGmvContriRate,
+      ROUND(aa.new_member_acquisition_gmv / aa.cost, 2) AS newMemberRoi,
+      ROUND(aa.cost / aa.new_member_acquisition_count, 2) AS newMemberCac,
+      ROUND(aa.new_member_acquisition_count / aa.periodic_monthly_active_user_count, 2) AS newMemberContriRate,
+      ROUND(aa.new_member_acquisition_gmv / aa.periodic_monthly_active_user_gmv, 2) AS newMemberGmvContriRate,
+      ROUND(aa.monthly_active_member_gmv / aa.monthly_active_member_count, 2) AS activityPeriodPerMAU_GMV,
+      ROUND(aa.next_month_active_member_gmv / aa.next_month_active_member_count, 2) AS nextMonthPerMAU_GMV,
+      ROUND(aa.new_member_acquisition_gmv / aa.new_member_acquisition_count, 2) AS activityPeriodPerNew_GMV,
+      ROUND(aa.next_month_new_member_gmv / aa.next_month_new_member_count, 2) AS nextMonthPerNew_GMV,
+      ROUND(aa.next_month_active_member_count / aa.monthly_active_member_count, 2) AS mauNextMonthRetentionRate,
+      ROUND(aa.next_month_new_member_count / aa.new_member_acquisition_count, 2) AS newMemberNextMonthRetentionRate,
+
+      -- 十七个计算数据的均值
+      ROUND(AVG(aa.cost / aa.exposure_count * 1000), 2) AS cpmAvg,
+      ROUND(AVG(amsa.cost / amsa.click_count), 2) AS cpcAvg,
+      ROUND(AVG(amsa.click_count / amsa.exposure_count * 100), 2) AS ctrAvg,
+      ROUND(AVG(aa.monthly_active_member_gmv / aa.cost), 2) AS roiAvg,
+      ROUND(AVG(aa.cost / aa.monthly_active_member_count), 2) AS cacAvg,
+      ROUND(AVG(aa.monthly_active_member_count / aa.periodic_monthly_active_user_count), 2) AS mamcRateAvg,
+      ROUND(AVG(aa.monthly_active_member_gmv / aa.periodic_monthly_active_user_gmv), 2) AS mamcGmvRateAvg,
+      ROUND(AVG(aa.new_member_acquisition_gmv / aa.cost), 2) AS rnmRoiAvg,
+      ROUND(AVG(aa.cost / aa.new_member_acquisition_count), 2) AS rnmCacAvg,
+      ROUND(AVG(aa.new_member_acquisition_count / aa.periodic_monthly_active_user_count), 2) AS nmcRateAvg,
+      ROUND(AVG(aa.new_member_acquisition_gmv / aa.periodic_monthly_active_user_gmv), 2) AS nmcGmvRateAvg,
+      ROUND(AVG(aa.monthly_active_member_gmv / aa.monthly_active_member_count), 2) AS pcmaGmvAvg,
+      ROUND(AVG(aa.next_month_active_member_gmv / aa.next_month_active_member_count), 2) AS mpcmaGmvAvg,
+      ROUND(AVG(aa.new_member_acquisition_gmv / aa.new_member_acquisition_count), 2) AS pcnGmvAvg,
+      ROUND(AVG(aa.next_month_new_member_gmv / aa.next_month_new_member_count), 2) AS panGmvAvg,
+      ROUND(AVG(aa.next_month_active_member_count / aa.monthly_active_member_count), 2) AS masmRateAvg,
+      ROUND(AVG(aa.next_month_new_member_count / aa.new_member_acquisition_count), 2) AS mrrRateAvg,
+
+      -- 十七个计算数据的差值指标
+      ROUND((aa.cost / aa.exposure_count * 1000) - AVG(aa.cost / aa.exposure_count * 1000), 2) AS cpmDiff,
+      ROUND((amsa.cost / amsa.click_count) - AVG(amsa.cost / amsa.click_count), 2) AS cpcDiff,
+      ROUND((amsa.click_count / amsa.exposure_count * 100) - AVG(amsa.click_count / amsa.exposure_count * 100), 2) AS ctrDiff,
+      ROUND((aa.monthly_active_member_gmv / aa.cost) - AVG(aa.monthly_active_member_gmv / aa.cost), 2) AS monthlyActiveRoiDiff,
+      ROUND((aa.cost / aa.monthly_active_member_count) - AVG(aa.cost / aa.monthly_active_member_count), 2) AS monthlyActiveCacDiff,
+      ROUND((aa.monthly_active_member_count / aa.periodic_monthly_active_user_count) - AVG(aa.monthly_active_member_count / aa.periodic_monthly_active_user_count), 2) AS monthlyActiveContriRateDiff,
+      ROUND((aa.monthly_active_member_gmv / aa.periodic_monthly_active_user_gmv) - AVG(aa.monthly_active_member_gmv / aa.periodic_monthly_active_user_gmv), 2) AS monthlyActiveGmvContriRateDiff,
+      ROUND((aa.new_member_acquisition_gmv / aa.cost) - AVG(aa.new_member_acquisition_gmv / aa.cost), 2) AS newMemberRoiDiff,
+      ROUND((aa.cost / aa.new_member_acquisition_count) - AVG(aa.cost / aa.new_member_acquisition_count), 2) AS newMemberCacDiff,
+      ROUND((aa.new_member_acquisition_count / aa.periodic_monthly_active_user_count) - AVG(aa.new_member_acquisition_count / aa.periodic_monthly_active_user_count), 2) AS newMemberContriRateDiff,
+      ROUND((aa.new_member_acquisition_gmv / aa.periodic_monthly_active_user_gmv) - AVG(aa.new_member_acquisition_gmv / aa.periodic_monthly_active_user_gmv), 2) AS newMemberGmvContriRateDiff,
+      ROUND((aa.monthly_active_member_gmv / aa.monthly_active_member_count) - AVG(aa.monthly_active_member_gmv / aa.monthly_active_member_count), 2) AS activityPeriodPerMAU_GMVDiff,
+      ROUND((aa.next_month_active_member_gmv / aa.next_month_active_member_count) - AVG(aa.next_month_active_member_gmv / aa.next_month_active_member_count), 2) AS nextMonthPerMAU_GMVDiff,
+      ROUND((aa.new_member_acquisition_gmv / aa.new_member_acquisition_count) - AVG(aa.new_member_acquisition_gmv / aa.new_member_acquisition_count), 2) AS activityPeriodPerNew_GMVDiff,
+      ROUND((aa.next_month_new_member_gmv / aa.next_month_new_member_count) - AVG(aa.next_month_new_member_gmv / aa.next_month_new_member_count), 2) AS nextMonthPerNew_GMVDiff,
+      ROUND((aa.next_month_active_member_count / aa.monthly_active_member_count) - AVG(aa.next_month_active_member_count / aa.monthly_active_member_count), 2) AS mauNextMonthRetentionRateDiff,
+      ROUND((aa.next_month_new_member_count / aa.new_member_acquisition_count) - AVG(aa.next_month_new_member_count / aa.new_member_acquisition_count), 2) AS newMemberNextMonthRetentionRateDiff
+
+    FROM activity_analysis aa
+           INNER JOIN activity_media_slot_analysis amsa
+                      ON aa.campaign_id = amsa.campaign_id
+    WHERE aa.campaign_id = #{cid}
+    <if test="point!=''">
+      and amsa.contact_point = #{point}
+    </if>
+    GROUP BY
+      aa.campaign_id,
+      aa.cost, aa.exposure_count, aa.monthly_active_member_gmv, aa.monthly_active_member_count,
+      aa.periodic_monthly_active_user_count, aa.periodic_monthly_active_user_gmv,
+      aa.new_member_acquisition_gmv, aa.new_member_acquisition_count,
+      aa.next_month_active_member_gmv, aa.next_month_active_member_count,
+      aa.next_month_new_member_gmv, aa.next_month_new_member_count,
+      amsa.exposure_count, amsa.exposure_user_count, amsa.click_count, amsa.click_user_count
+    <if test="orderField==''">
+      order by cost desc
+    </if>
+    <if test="orderField!='' and orderAD!=''">
+      ORDER BY ${orderField} ${orderAD}
+    </if>
+  </select>
+</mapper>

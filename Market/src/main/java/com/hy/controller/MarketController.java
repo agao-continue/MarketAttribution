@@ -94,4 +94,15 @@ public class MarketController {
         List<String> list = activityMediaSlotAnalysisService.findContactPoint();
         return new Result(ContentResult.SUCCESS_CODE,ContentResult.SUCCESS_MESSAGE,list);
     }
+    //查询当前活动下全部媒介归因排名
+    @GetMapping("/findMediaSlot")
+    public Result findMediaSlot(String cid,String point,String orderField,String orderAD) {
+        List<MediaSlot> mediaSlot = activityMediaSlotAnalysisService.findMediaSlot(cid,point,orderField,orderAD);
+        return new Result(ContentResult.SUCCESS_CODE,ContentResult.SUCCESS_MESSAGE,mediaSlot);
+    }
+    //媒介归因排名下载
+    @GetMapping("/findMediaSlotDl")
+    public void findMediaSlotDl(HttpServletResponse response,String cid,String point,String orderField,String orderAD) throws IOException {
+        activityMediaSlotAnalysisService.findMediaSlotDl(response,cid,point,orderField,orderAD);
+    }
 }
