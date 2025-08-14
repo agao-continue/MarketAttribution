@@ -437,8 +437,11 @@
            INNER JOIN activity_media_slot_analysis amsa
                       ON aa.campaign_id = amsa.campaign_id
     WHERE aa.campaign_id = #{cid}
-    <if test="point!=''">
+    <if test="point!=null">
       and amsa.contact_point = #{point}
+    </if>
+    <if test="media!=null">
+      and amsa.media = #{media}
     </if>
     GROUP BY
       aa.campaign_id,
@@ -455,4 +458,143 @@
       ORDER BY ${orderField} ${orderAD}
     </if>
   </select>
+  <select id="findAllMedia" resultType="string">
+    select media from activity_media_slot_analysis group by media;
+  </select>
+  <select id="platformDeliveryComparison" resultType="com.hy.pojo.PlatBean">
+    SELECT
+      sum(${field}) as field,
+      media as media,
+      campaign_id as cid,
+      campaign_name as cname
+    FROM
+      activity_media_slot_analysis a
+    WHERE
+      a.campaign_id IN ( #{cid1}, #{cid2} )
+    GROUP BY
+      campaign_id,
+      media
+    ORDER BY
+        campaign_id
+  </select>
+    <select id="distributionOfSubMediaPlatforms" resultType="com.hy.pojo.PlatBean">
+      SELECT
+      <if test="field!=null and field=='cost'">
+        sum(cost) as field,
+      </if>
+      <if test="field!=null and field=='exposureCount'">
+        sum(exposure_count) as field,
+      </if>
+      <if test="field!=null and field=='exposureUserCount'">
+        sum(exposure_user_count) as field,
+      </if>
+      <if test="field!=null and field=='clickCount'">
+        sum(click_count) as field,
+      </if>
+      <if test="field!=null and field=='clickUserCount'">
+        sum(click_user_count) as field,
+      </if>
+      <if test="field!=null and field=='monthlyActiveMemberCount'">
+        sum(monthly_active_member_count) as field,
+      </if>
+      <if test="field!=null and field=='monthlyActiveMemberGmv'">
+        sum(monthly_active_member_gmv) as field,
+      </if>
+      <if test="field!=null and field=='newMemberAcquisitionCount'">
+        sum(new_member_acquisition_count) as field,
+      </if>
+      <if test="field!=null and field=='newMemberAcquisitionGmv'">
+        sum(new_member_acquisition_gmv) as field,
+      </if>
+      <if test="field!=null and field=='nextMonthActiveMemberCount'">
+        sum(next_month_active_member_count) as field,
+      </if>
+      <if test="field!=null and field=='nextMonthActiveMemberGmv'">
+        sum(next_month_active_member_gmv) as field,
+      </if>
+      <if test="field!=null and field=='nextMonthNewMemberCount'">
+        sum(next_month_new_member_count) as field,
+      </if>
+      <if test="field!=null and field=='nextMonthNewMemberGmv'">
+        sum(next_month_new_member_gmv) as field,
+      </if>
+      <if test="field!=null and field=='cpm'">
+        ROUND(sum(cost / exposure_count * 1000), 2) as field,
+      </if>
+      <if test="field!=null and field=='cpc'">
+        ROUND(sum(cost / click_count), 2) as field,
+      </if>
+      <if test="field!=null and field=='ctr'">
+        ROUND(sum(click_count / exposure_count * 100), 2) as field,
+      </if>
+      <if test="field!=null and field=='monthlyActiveRoi'">
+        ROUND(sum(monthly_active_member_gmv / cost), 2) as field,
+      </if>
+      <if test="field!=null and field=='monthlyActiveCac'">
+        ROUND(sum(cost / monthly_active_member_count), 2) as field,
+      </if>
+      <if test="field!=null and field=='monthlyActiveContriRate'">
+        ROUND(sum(monthly_active_member_count / periodic_monthly_active_user_count), 2) as field,
+      </if>
+      <if test="field!=null and field=='monthlyActiveGmvContriRate'">
+        ROUND(sum(monthly_active_member_gmv / periodic_monthly_active_user_gmv), 2) as field,
+      </if>
+      <if test="field!=null and field=='newMemberRoi'">
+        ROUND(sum(new_member_acquisition_gmv / cost), 2) as field,
+      </if>
+      <if test="field!=null and field=='newMemberCac'">
+        ROUND(sum(cost / new_member_acquisition_count), 2) as field,
+      </if>
+      <if test="field!=null and field=='newMemberContriRate'">
+        ROUND(sum(new_member_acquisition_count / periodic_monthly_active_user_count), 2) as field,
+      </if>
+      <if test="field!=null and field=='newMemberGmvContriRate'">
+        ROUND(sum(new_member_acquisition_gmv / periodic_monthly_active_user_gmv), 2) as field,
+      </if>
+      <if test="field!=null and field=='activityPeriodPerMauGmv'">
+        ROUND(sum(monthly_active_member_gmv / monthly_active_member_count), 2) as field,
+      </if>
+      <if test="field!=null and field=='nextMonthPerMauGmv'">
+        ROUND(sum(next_month_active_member_gmv / next_month_active_member_count), 2) as field,
+      </if>
+      <if test="field!=null and field=='activityPeriodPerNewGmv'">
+        ROUND(sum(new_member_acquisition_gmv / new_member_acquisition_count), 2) as field,
+      </if>
+      <if test="field!=null and field=='nextMonthPerNewGmv'">
+        ROUND(sum(next_month_new_member_gmv / next_month_new_member_count), 2) as field,
+      </if>
+      <if test="field!=null and field=='mauNextMonthRetentionRate'">
+        ROUND(sum(next_month_active_member_count / monthly_active_member_count), 2) as field,
+      </if>
+      <if test="field!=null and field=='newMemberNextMonthRetentionRate'">
+        ROUND(sum(next_month_new_member_count / new_member_acquisition_count), 2) as field,
+      </if>
+        media as media,
+        campaign_id as cid,
+        campaign_name as cname
+      FROM
+        activity_media_slot_analysis a
+      WHERE
+        a.campaign_id IN ( #{cid1}, #{cid2} )
+      GROUP BY
+        campaign_id,
+        media
+    </select>
+  <select id="mediaContactComposition" resultType="com.hy.pojo.PlatBean">
+    SELECT
+      sum(${field}) as field,
+      media as media,
+      campaign_id as cid,
+      campaign_name as cname,
+      contact_point as point
+    FROM
+      activity_media_slot_analysis
+    WHERE
+      campaign_id IN ( #{cid1}, #{cid2} )
+    GROUP BY
+      media,
+      campaign_id,
+      contact_point
+  </select>
+
 </mapper>

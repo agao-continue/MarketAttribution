@@ -15,9 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -129,6 +127,23 @@ public class MarketServiceImpl implements MarketService {
                 .registerWriteHandler(horizontalCellStyleStrategy) // 调用父类AbstractExcelWriterParameterBuilder的方法
                 .sheet("转化效益分析") // 调用ExcelWriterBuilder自身的方法
                 .doWrite(arr);// 执行写入
+    }
+
+    @Override
+    public Map<String, List<String>> findTypeAndCname() {
+        List<ActivityAnalysis>aa=activityAnalysisMapper.selectByExample(null);
+        Map<String,List<ActivityAnalysis>>collect=aa.stream().collect(Collectors.groupingBy((x)->x.getActivityType()));
+        HashMap<String,List<String>> map=new HashMap<>();
+        collect.forEach((x,y)->{
+            List<String>l1=y.stream().map((y1)->y1.getCampaignName()).collect(Collectors.toList());
+            map.put(x,l1);
+        });
+        return map;
+    }
+
+    @Override
+    public List<ActivityAnalysis> findCpm() {
+        return activityAnalysisMapper.findCpm();
     }
 
 }

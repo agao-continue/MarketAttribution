@@ -50,6 +50,16 @@ public class ActivityAnalysis {
 
     private String activityType;
 
+    public BigDecimal getCpm() {
+        return cpm;
+    }
+
+    public void setCpm(BigDecimal cpm) {
+        this.cpm = cpm;
+    }
+
+    private BigDecimal cpm;
+
     public Alog getAlog() {
         return alog;
     }

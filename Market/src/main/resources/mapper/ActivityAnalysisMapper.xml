@@ -474,4 +474,12 @@
     FROM activity_analysis
     WHERE campaign_id = #{cid};
   </select>
+    <select id="findCpm" resultMap="BaseResultMap" resultType="com.hy.pojo.ActivityAnalysis">
+      SELECT
+        campaign_name,
+        campaign_id,
+        ROUND( cost / exposure_count * 1000, 2 ) AS cpm
+      FROM
+        activity_analysis
+    </select>
 </mapper>

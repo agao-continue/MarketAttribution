@@ -7,6 +7,7 @@ import com.hy.pojo.ConversionIncome;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 public interface MarketService {
 
@@ -25,4 +26,7 @@ public interface MarketService {
     void conversionIncomeDl(HttpServletResponse response,String cid,String status) throws IOException;
 
 
+    Map<String, List<String>> findTypeAndCname();
+
+    List<ActivityAnalysis> findCpm();
 }

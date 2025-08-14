@@ -30,4 +30,6 @@ public interface ActivityAnalysisMapper {
     AlogAvg getAlogAvg(String cid);
 
     List<ConversionIncome> getConvertionIncome(@Param("cid") String cid);
+
+    List<ActivityAnalysis> findCpm();
 }
